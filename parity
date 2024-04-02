@@ -1,0 +1,5 @@
+module parity(
+    input a, b, c,
+    output x);
+assign x = (~a & ~b & c) | (~a & b & ~c) | (a & ~b & ~c) | (a & b & c);
+endmodule
