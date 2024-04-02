@@ -3,7 +3,7 @@ module counter_tb();
 reg clk, rst_n;
 wire [3:0] cnt;
 
-counter     instance_counter(
+counter instance_counter(
     .clk(clk),
     .rst_n(rst_n),
     .cnt(cnt)
