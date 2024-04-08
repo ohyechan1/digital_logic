@@ -1,7 +1,6 @@
-module decoder_3to8(
-    input [2:0] input_bits,
-    output reg [7:0] output_bits
-);
+module decoder_3to8(input_bits, output_bits);
+    input [2:0] input_bits;
+    output reg [7:0] output_bits;
 
 always @(*) begin
     case(input_bits)
