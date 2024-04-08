@@ -1,12 +1,12 @@
 module decoder_3to8_tb;
+reg [2:0] input_bits;
+wire [7:0] output_bits;
 
-decoder_3to8 dut (
+decoder_3to8 instance_decoder_3o8(
     .input_bits(input_bits), 
     .output_bits(output_bits) 
 );
 
-reg [2:0] input_bits;
-wire [7:0] output_bits;
 
 initial begin
     $dumpfile("decoder_3to8_tb.vcd"); // VCD 파일 생성
