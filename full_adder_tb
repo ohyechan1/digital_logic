@@ -1,0 +1,47 @@
+module Testbench_FullAdder3Bit;
+
+    // 모듈 인스턴스화
+    FullAdder3Bit UUT (
+        .A(A),
+        .B(B),
+        .Cin(Cin),
+        .Sum(Sum),
+        .Cout(Cout)
+    );
+
+    // 입력 신호 생성
+    reg [2:0] A, B;  // 3비트 입력 A와 B
+    reg Cin;         // 입력 Carry
+
+    // 출력 신호 연결
+    wire [2:0] Sum;  // 3비트 출력 Sum
+    wire Cout;        // 출력 Carry
+
+    // 시계 생성
+    initial begin
+        // 테스트케이스 1: A=3'b001, B=3'b010, Cin=0
+        A = 3'b001;
+        B = 3'b010;
+        Cin = 0;
+        #10; // 10 틱 후 결과 확인
+        $display("Test Case 1: A=%b, B=%b, Cin=%b, Sum=%b, Cout=%b", A, B, Cin, Sum, Cout);
+
+        // 테스트케이스 2: A=3'b111, B=3'b001, Cin=1
+        A = 3'b111;
+        B = 3'b001;
+        Cin = 1;
+        #10; // 10 틱 후 결과 확인
+        $display("Test Case 2: A=%b, B=%b, Cin=%b, Sum=%b, Cout=%b", A, B, Cin, Sum, Cout);
+
+        // 테스트케이스 3: A=3'b010, B=3'b110, Cin=1
+        A = 3'b010;
+        B = 3'b110;
+        Cin = 1;
+        #10; // 10 틱 후 결과 확인
+        $display("Test Case 3: A=%b, B=%b, Cin=%b, Sum=%b, Cout=%b", A, B, Cin, Sum, Cout);
+
+        // 시뮬레이션 종료
+        $finish;
+    end
+
+endmodule
