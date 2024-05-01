@@ -1,0 +1,26 @@
+module FullAdder3Bit (
+    input [2:0] A, B,  // 3비트 입력 A와 B
+    input Cin,         // 입력 Carry
+    output [2:0] Sum,  // 3비트 출력 Sum
+    output Cout        // 출력 Carry
+);
+
+    // 각 비트에 대한 Full Adder 인스턴스화
+    FullAdder FA0 (.A(A[0]), .B(B[0]), .Cin(Cin), .Sum(Sum[0]), .Cout(Cout0));
+    FullAdder FA1 (.A(A[1]), .B(B[1]), .Cin(Cout0), .Sum(Sum[1]), .Cout(Cout1));
+    FullAdder FA2 (.A(A[2]), .B(B[2]), .Cin(Cout1), .Sum(Sum[2]), .Cout(Cout));
+
+endmodule
+
+module FullAdder (
+    input A, B, Cin,
+    output Sum, Cout
+);
+
+    // Sum 출력을 계산
+    assign Sum = A ^ B ^ Cin;
+
+    // Carry 출력을 계산
+    assign Cout = (A & B) | (Cin & (A ^ B));
+
+endmodule
