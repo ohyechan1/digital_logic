@@ -1,0 +1,17 @@
+module execute(
+    input wire [3:0] control,
+    input wire [7:0] A,
+    input wire [7:0] B,
+    output reg [7:0] result
+);
+
+    // 연산 수행 및 결과 저장
+    always @* begin
+        case (control)
+            4'b0001: result = A + B;
+            4'b1000: result = A - B;
+            default: result = 8'h0000;
+        endcase
+    end
+
+endmodule
