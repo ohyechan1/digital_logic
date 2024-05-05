@@ -1,7 +1,7 @@
 module execute_tb;
 
     // 테스트 벤치마크 인스턴스 생성
-    execute execute_unit (
+    execute UUT (
         .control(control),
         .A(A),
         .B(B),
