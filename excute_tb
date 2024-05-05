@@ -1,0 +1,59 @@
+module execute_tb;
+
+    // 테스트 벤치마크 인스턴스 생성
+    execute execute_unit (
+        .control(control),
+        .A(A),
+        .B(B),
+        .result(result)
+    );
+
+    // 시뮬레이션용 신호 변수
+    reg [3:0] control;
+    reg [7:0] A, B;
+    wire [7:0] result; 
+
+    // 테스트
+    initial begin
+      
+        control = 4'b0001;  // ADD 제어 신호 설정
+        A = 8'h0001;  
+        B = 8'h0001; 
+        #10;
+        $display("Control = %b, A = %h, B = %h, Result = %h", 
+                 control, A, B, result);
+
+        control = 4'b0010;  // SUB 제어 신호 설정
+        A = 8'h0011; 
+        B = 8'h0001;
+        #10;
+        $display("Control = %b, A = %h, B = %h, Result = %h", 
+                 control, A, B, result);
+
+        control = 4'b0011;  // MUL 제어 신호 설정
+        A = 8'h0011;  
+        B = 8'h0011; 
+        #10;
+        $display("Control = %b, A = %h, B = %h, Result = %h", 
+                 control, A, B, result);
+
+        control = 4'b0100;  // DIV 제어 신호 설정
+        A = 8'h0011; 
+        B = 8'h0001;
+        #10;
+        $display("Control = %b, A = %h, B = %h, Result = %h", 
+                 control, A, B, result);
+
+  
+        control_signals = 4'b0000;
+        A = 8'h0000;
+        B = 8'h0000;
+        #10; 
+        $display("Control = %b, A = %h, B = %h, Result = %h", 
+                 control, A, B, result);
+
+        // 시뮬레이션 종료
+        $finish;
+    end
+
+endmodule
