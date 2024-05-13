@@ -1,3 +1,4 @@
+
 module Fetch_tb;
 
     // 페치 모듈 인스턴스화
@@ -11,7 +12,6 @@ module Fetch_tb;
     // 입력 신호 생성
     reg clk = 0;
     reg reset = 0;
-    wire [3:0] instruction;      // 읽어온 명령어를 모니터링하기 위한 와이어
     reg [15:0] memory;           // 명령어 메모리를 초기화하기 위한 레지스터
 
     // 클럭 생성
