@@ -11,8 +11,13 @@ module execute(
             4'b0001: result = A + B;
             4'b0010: result = A - B;
             4'b0011: result = A * B;
-            4'b0100: result = A / B;
-            default: result = 8'h0000;
+            4'b0100: begin
+                        if (B != 0)  // 0으로 나누는 경우 방지
+                            result = A / B;
+                        else
+                            result = 8'h00; // 나눗셈 오류 처리 (임의의 값)
+                     end
+            default: result = 8'h00; // 기본 값 설정
         endcase
     end
 
