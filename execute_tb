@@ -1,3 +1,4 @@
+
 module execute_tb;
 
     // 테스트 벤치마크 인스턴스 생성
@@ -15,7 +16,6 @@ module execute_tb;
 
     // 테스트
     initial begin
-      
         control = 4'b0001;  // ADD 제어 신호 설정
         A = 8'h0001;  
         B = 8'h0001; 
@@ -41,14 +41,6 @@ module execute_tb;
         A = 8'h0011; 
         B = 8'h0001;
         #10;
-        $display("Control = %b, A = %h, B = %h, Result = %h", 
-                 control, A, B, result);
-
-  
-        control = 4'b0000;
-        A = 8'h0000;
-        B = 8'h0000;
-        #10; 
         $display("Control = %b, A = %h, B = %h, Result = %h", 
                  control, A, B, result);
 
