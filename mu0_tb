@@ -1,0 +1,47 @@
+
+module MU0_Processor_Testbench;
+
+    // 시뮬레이션용 신호 변수
+    reg clk = 0;
+    reg reset = 1;
+    reg mem_read = 1;
+    reg [15:0] mem_address = 16'h0000;
+
+    // 출력 변수
+    wire [15:0] result;
+    wire [15:0] next_pc;
+
+    // 모듈 인스턴스화
+    MU0_Processor processor (
+        .clk(clk),
+        .reset(reset),
+        .mem_read(mem_read),
+        .mem_address(mem_address),
+        .result(result),
+        .next_pc(next_pc)
+    );
+
+    // 테스트 시작
+    initial begin
+        // 리셋 해제
+        #10 reset = 0;
+
+        // 클럭 사이클링 (5 사이클)
+        repeat (5) begin
+            #10;  // 10ns 딜레이
+        end
+
+        // 결과 확인
+        $display("Instruction: %h", processor.instruction);
+        $display("Next PC: %h", processor.next_pc);
+        $display("Control Signals: %b", processor.control_signals);
+        $display("Result: %h", processor.result);
+
+        // 시뮬레이션 종료
+        $finish;
+    end
+
+    // 클럭 생성
+    always #5 clk = ~clk;
+
+endmodule
