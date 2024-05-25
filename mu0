@@ -1,0 +1,66 @@
+module MU0_Processor(
+    input wire clk,
+    input wire reset,
+    input wire mem_read,
+    input wire [15:0] mem_address,
+    output reg [15:0] result,
+    output reg [15:0] next_pc
+);
+
+    // 메모리 모듈
+    reg [15:0] memory [0:65535];  // 16-bit 메모리
+
+    // 레지스터 선언
+    reg [15:0] pc;             // 프로그램 카운터
+    reg [15:0] instruction;   // 현재 명령어
+    reg [3:0] control_signals; // 제어 신호
+
+    // 초기 메모리 값 설정 (테스트용 프로그램)
+    initial begin
+        // 메모리에 테스트 프로그램 로드
+        memory[0] <= 16'h1000;  // 0번지: LOAD 명령어 (주소 0)
+        memory[1] <= 16'h2001;  // 1번지: STORE 명령어 (주소 1)
+        memory[2] <= 16'h3002;  // 2번지: ADD 명령어 (주소 2)
+        memory[3] <= 16'h4003;  // 3번지: SUBTRACT 명령어 (주소 3)
+        memory[4] <= 16'h5004;  // 4번지: NOP (기본 값, 주소 4)
+    end
+
+    // 프로세서 동작
+    always @(posedge clk or posedge reset) begin
+        if (reset) begin
+            // 리셋 상태에서는 초기화
+            pc <= 16'h0000;
+            instruction <= 16'h0000;
+            control_signals <= 4'b0000;
+            result <= 16'h0000;
+            next_pc <= 16'h0000;
+        end
+        else if (mem_read) begin
+            // fetch 단계: 현재 PC가 가리키는 주소에서 명령어 읽기
+            instruction <= memory[pc];
+            next_pc <= pc + 1;
+
+            // decode 단계: 명령어 필드에서 제어 신호 설정
+            case (instruction[15:12])
+                4'b0001: control_signals <= 4'b0001;  // LOAD 명령어
+                4'b0010: control_signals <= 4'b0010;  // STORE 명령어
+                4'b0011: control_signals <= 4'b0100;  // ADD 명령어
+                4'b0100: control_signals <= 4'b1000;  // SUBTRACT 명령어
+                default: control_signals <= 4'b0000;  // 기본 값 (NOP)
+            endcase
+
+            // execute 단계: 연산 수행
+            case (control_signals)
+                4'b0001: result <= memory[instruction[11:0]];              // LOAD 연산
+                4'b0010: memory[instruction[11:0]] <= result;               // STORE 연산
+                4'b0100: result <= result + memory[instruction[11:0]];     // ADD 연산
+                4'b1000: result <= result - memory[instruction[11:0]];     // SUBTRACT 연산
+                default: result <= 16'h0000;                               // 기본 값 (NOP)
+            endcase
+
+            // 프로그램 카운터 업데이트
+            pc <= next_pc;
+        end
+    end
+
+endmodule
